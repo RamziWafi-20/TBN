@@ -1,0 +1,612 @@
+/* ═══════════════════════════════════════════════════════════════
+   TBN — Trash Bank Neskar  ·  Design System
+   Laravel + Blade PHP
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── 1. CSS Custom Properties (Design Tokens) ─────────────── */
+:root {
+    /* ── Radius ── */
+    --radius: 1rem;
+
+    /* ── Colors (oklch) ── */
+    --background:           oklch(97.6% .012 106);
+    --foreground:           oklch(24% .03 155);
+    --card:                 oklch(100% 0 0);
+    --card-foreground:      oklch(24% .03 155);
+    --primary:              oklch(44% .11 157);
+    --primary-foreground:   oklch(98% .02 120);
+    --secondary:            oklch(94% .03 140);
+    --secondary-foreground: oklch(32% .06 157);
+    --muted:                oklch(95% .015 120);
+    --muted-foreground:     oklch(51% .03 150);
+    --accent:               oklch(84% .19 128);
+    --accent-foreground:    oklch(26% .07 150);
+    --destructive:          oklch(58% .21 27);
+    --border:               oklch(90% .02 130);
+    --input:                oklch(90% .02 130);
+    --ring:                 oklch(62% .13 150);
+    --success:              oklch(62% .15 152);
+    --warning:              oklch(78% .15 75);
+
+    /* ── Gradients ── */
+    --gradient-eco: linear-gradient(135deg, oklch(36% .09 157), oklch(55% .15 145) 55%, oklch(78% .18 128));
+    --gradient-soft: linear-gradient(160deg, oklch(98% .02 120), oklch(94% .04 140));
+
+    /* ── Shadows ── */
+    --shadow-card: 0 1px 2px oklch(30% .05 150 / .06),
+                   0 12px 32px -18px oklch(30% .05 150 / .35);
+    --shadow-lift: 0 20px 50px -24px oklch(35% .09 150 / .55);
+
+    /* ── Typography ── */
+    --font-body:    'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-display: 'Sora', system-ui, -apple-system, sans-serif;
+
+    /* ── Spacing ── */
+    --space-1:  0.25rem;
+    --space-2:  0.5rem;
+    --space-3:  0.75rem;
+    --space-4:  1rem;
+    --space-5:  1.25rem;
+    --space-6:  1.5rem;
+    --space-8:  2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+
+    /* ── Layout ── */
+    --max-w: 72rem;          /* 1152px — matches max-w-6xl */
+    --px:    var(--space-5);  /* page horizontal padding */
+}
+
+/* ─── 2. Reset & Base ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    line-height: 1.5;
+    font-family: var(--font-body);
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100dvh;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg, video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+/* ─── 3. Utilities ──────────────────────────────────────────── */
+.text-accent {
+    color: var(--primary);
+}
+
+/* ─── 4. Buttons ────────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+    font-family: var(--font-body);
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: calc(var(--radius) * 0.5);
+    transition: background-color 0.15s ease,
+                color 0.15s ease,
+                box-shadow 0.15s ease,
+                transform 0.1s ease;
+    line-height: 1;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+/* Sizes */
+.btn-sm {
+    height: 2rem;
+    padding: 0 var(--space-3);
+    font-size: 0.75rem;
+}
+
+.btn-lg {
+    height: 2.5rem;
+    padding: 0 var(--space-8);
+    font-size: 0.875rem;
+}
+
+/* Variants */
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    box-shadow: 0 1px 2px oklch(30% .05 150 / .12);
+}
+
+.btn-primary:hover {
+    background-color: oklch(40% .10 157);
+}
+
+.btn-outline {
+    background-color: var(--background);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 2px oklch(30% .05 150 / .06);
+}
+
+.btn-outline:hover {
+    background-color: var(--muted);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* ─── 5. Header ─────────────────────────────────────────────── */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: oklch(97.6% .012 106 / .85);
+    backdrop-filter: blur(12px) saturate(1.6);
+    -webkit-backdrop-filter: blur(12px) saturate(1.6);
+}
+
+.header-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-5) var(--px);
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: calc(var(--radius) * 0.75);
+    background: var(--gradient-eco);
+    color: var(--primary-foreground);
+}
+
+.logo-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.logo-centered {
+    justify-content: center;
+}
+
+/* ─── 6. Hero Section ───────────────────────────────────────── */
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle grid-dot texture background */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle, oklch(70% .04 150 / .15) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+}
+
+.hero-inner {
+    position: relative;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: grid;
+    align-items: center;
+    gap: var(--space-10);
+    padding: var(--space-8) var(--px) var(--space-16);
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Badge */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background-color: var(--card);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.badge svg {
+    flex-shrink: 0;
+}
+
+/* Title */
+.hero-title {
+    margin-top: var(--space-5);
+    font-size: clamp(2.25rem, 5vw + 0.5rem, 3.75rem);
+    font-weight: 800;
+    line-height: 1.08;
+    text-wrap: balance;
+    letter-spacing: -0.025em;
+}
+
+/* Description */
+.hero-desc {
+    margin-top: var(--space-4);
+    max-width: 32rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+}
+
+/* CTA buttons */
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+}
+
+/* Hero image */
+.hero-image {
+    overflow: hidden;
+    border-radius: calc(var(--radius) * 1.5);
+    box-shadow: var(--shadow-lift);
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-image:hover img {
+    transform: scale(1.02);
+}
+
+/* ─── 7. Features Section ───────────────────────────────────── */
+.features {
+    padding-bottom: var(--space-20);
+}
+
+.features-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 var(--px);
+}
+
+.features-title {
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-weight: 700;
+}
+
+.features-grid {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+}
+
+/* Feature Card */
+.feature-card {
+    padding: var(--space-5);
+    border-radius: calc(var(--radius) * 1);
+    border: 1px solid var(--border);
+    background-color: var(--card);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.feature-card:hover {
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-2px);
+}
+
+.feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: calc(var(--radius) * 0.75);
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+}
+
+.feature-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.feature-name {
+    margin-top: var(--space-4);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.feature-desc {
+    margin-top: var(--space-2);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--muted-foreground);
+}
+
+/* ─── 8. Footer ─────────────────────────────────────────────── */
+.site-footer {
+    border-top: 1px solid var(--border);
+    padding: var(--space-8) var(--px);
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.footer-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+}
+
+/* ─── 9. Auth Page ──────────────────────────────────────────── */
+.page-auth {
+    min-height: calc(100dvh - 8rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--px);
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 24rem;
+}
+
+.auth-card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 1);
+    box-shadow: var(--shadow-card);
+    padding: var(--space-8);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+.auth-header .logo {
+    justify-content: center;
+    margin-bottom: var(--space-6);
+}
+
+.auth-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.auth-subtitle {
+    margin-top: var(--space-2);
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+/* Form */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.form-input {
+    height: 2.5rem;
+    padding: 0 var(--space-3);
+    border: 1px solid var(--input);
+    border-radius: calc(var(--radius) * 0.5);
+    background-color: var(--background);
+    font-size: 0.875rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input::placeholder {
+    color: var(--muted-foreground);
+    opacity: 0.6;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px oklch(62% .13 150 / .15);
+}
+
+.auth-footer {
+    margin-top: var(--space-6);
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.link {
+    color: var(--primary);
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* ─── 10. Responsive ────────────────────────────────────────── */
+
+/* sm: ≥ 640px */
+@media (min-width: 40rem) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* md: ≥ 768px */
+@media (min-width: 48rem) {
+    .hero-inner {
+        grid-template-columns: 1fr 1fr;
+        padding-top: var(--space-16);
+    }
+
+    .hero-title {
+        font-size: 3.75rem;
+    }
+
+    .features-title {
+        font-size: 1.875rem;
+    }
+}
+
+/* lg: ≥ 1024px */
+@media (min-width: 64rem) {
+    .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ─── 11. Animations & Micro-interactions ───────────────────── */
+
+/* Fade-in on page load */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-image {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.feature-card {
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Smooth button hover glow */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: oklch(55% .15 145 / .15);
+    pointer-events: none;
+}
+
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover::after {
+    opacity: 1;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

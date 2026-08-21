@@ -1,0 +1,18 @@
+<?php $__env->startSection('title','Ranking & Peringkat — TBN'); ?>
+<?php $__env->startSection('content'); ?>
+<div class="hero"><div><div class="eyebrow">Leaderboard TBN</div><div class="title">Peringkat Kontributor</div><p class="subtitle">Peringkat siswa dihitung dari total berat sampah yang tercatat pada waste_reports.</p></div></div>
+<div class="grid grid-2">
+<div class="card"><div class="section-head"><div><h3>Ranking Siswa</h3><p class="subtitle">Semakin besar kontribusi, semakin tinggi peringkat.</p></div><span class="chart-badge">TOP <?php echo e($ranking->count()); ?></span></div><div class="table-wrap"><table class="table"><thead><tr><th>#</th><th>Nama</th><th>Kelas</th><th>Berat</th><th>Nilai</th></tr></thead><tbody><?php $__empty_1 = true; $__currentLoopData = $ranking; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><tr><td><span class="rank <?php echo e($i < 3 ? 'top':''); ?>"><?php echo e($i+1); ?></span></td><td><b><?php echo e($row['user']->name); ?></b><br><span class="label"><?php echo e($row['transactions']); ?> setoran</span></td><td><?php echo e($row['class']); ?></td><td><b><?php echo e(number_format($row['weight'],2,',','.')); ?> kg</b></td><td>Rp <?php echo e(number_format($row['income'],0,',','.')); ?></td></tr><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><tr><td colspan="5">Belum ada data ranking.</td></tr><?php endif; ?></tbody></table></div></div>
+<div class="card chart-card"><div class="section-head"><div><h3>Kontribusi per Kelas</h3><p class="subtitle">Total kilogram per kelas.</p></div></div><div class="chart-box"><canvas id="classRankingChart"></canvas></div></div>
+</div>
+<div class="card" style="margin-top:18px"><div class="section-head"><div><h3>Ringkasan Kelas</h3><p class="subtitle">Performa kelas berdasarkan berat sampah.</p></div></div><div class="grid grid-3" style="margin-top:12px"><?php $__empty_1 = true; $__currentLoopData = $classes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?><div class="class-card"><span class="pill"><?php echo e($row['class']); ?></span><div class="metric" style="font-size:22px"><?php echo e(number_format($row['weight'],2,',','.')); ?> kg</div><div class="label"><?php echo e($row['students']); ?> siswa • Rp <?php echo e(number_format($row['income'],0,',','.')); ?></div></div><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?><p class="subtitle">Belum ada data kelas.</p><?php endif; ?></div></div>
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+<script>
+const classes=<?php echo json_encode($classes->values(), 15, 512) ?>;
+new Chart(document.getElementById('classRankingChart'),{type:'bar',data:{labels:classes.map(x=>x.class),datasets:[{label:'Kg Sampah',data:classes.map(x=>x.weight),backgroundColor:'#10b981',borderRadius:9}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true},x:{grid:{display:false}}}}});
+</script>
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('app.layout', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\xampp-portable-windows-x64-8.2.12-0-VS16\xampp\TBN\resources\views/app/ranking.blade.php ENDPATH**/ ?>
